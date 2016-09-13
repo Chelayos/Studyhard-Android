@@ -21,6 +21,8 @@ import com.google.gson.JsonParser;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Post extends AppCompatActivity {
@@ -30,6 +32,9 @@ public class Post extends AppCompatActivity {
     Map<String, Object> mapPost;
     Map<String, Object> mapTitle;
     Map<String, Object> mapContent;
+    Map<String, Object> map_embedded;
+    ArrayList map_replies;
+
     WPPost wp;
 
     @Override
@@ -40,7 +45,7 @@ public class Post extends AppCompatActivity {
         final String id = getIntent().getExtras().getString("id");
         content = (WebView)findViewById(R.id.content);
 
-        String url = "https://studyhard.tk/wp-json/wp/v2/posts/"+id+"?fields=title,content";
+        String url = "https://studyhard.tk/wp-json/wp/v2/posts/"+id+"?_embed=1";
 
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -50,8 +55,17 @@ public class Post extends AppCompatActivity {
                 mapTitle = (Map<String, Object>) mapPost.get("title");
                 mapContent = (Map<String, Object>) mapPost.get("content");
 
-                wp = (WPPost) gson.fromJson(s, WPPost.class);
-                content.loadData(wp.title.toString(),"text/html; charset=UTF-8", null);
+                map_embedded = (Map<String, Object>) mapPost.get("_embedded");
+
+                // Do we have replies?
+                if(map_embedded.containsKey("replies"))
+                {
+                    map_replies = (ArrayList) map_embedded.get("replies");
+                    content.loadData(map_replies.toString(), "text/html; charset=UTF-8", null);
+                }
+
+                //wp = (WPPost) gson.fromJson(s, WPPost.class);
+                //content.loadData(wp.title.toString(),"text/html; charset=UTF-8", null);
 
                 //set data
                 getSupportActionBar().setTitle(mapTitle.get("rendered").toString());
