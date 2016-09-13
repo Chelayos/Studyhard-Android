@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/WPAndroid.iml" filepath="$PROJECT_DIR$/WPAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wpandroid.iml" filepath="$PROJECT_DIR$/wpandroid.iml" />
     </modules>
   </component>
 </project>

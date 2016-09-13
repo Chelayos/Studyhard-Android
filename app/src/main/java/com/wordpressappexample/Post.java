@@ -4,6 +4,7 @@ package com.wordpressappexample;
 import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +16,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 
 public class Post extends AppCompatActivity {
@@ -24,6 +30,7 @@ public class Post extends AppCompatActivity {
     Map<String, Object> mapPost;
     Map<String, Object> mapTitle;
     Map<String, Object> mapContent;
+    WPPost wp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +39,6 @@ public class Post extends AppCompatActivity {
 
         final String id = getIntent().getExtras().getString("id");
         content = (WebView)findViewById(R.id.content);
-
-        //progressDialog = new ProgressDialog(Post.this);
-        //progressDialog.setMessage("Loading...");
-        //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        //progressDialog.show();
 
         String url = "https://studyhard.tk/wp-json/wp/v2/posts/"+id+"?fields=title,content";
 
@@ -48,11 +50,12 @@ public class Post extends AppCompatActivity {
                 mapTitle = (Map<String, Object>) mapPost.get("title");
                 mapContent = (Map<String, Object>) mapPost.get("content");
 
+                wp = (WPPost) gson.fromJson(s, WPPost.class);
+                content.loadData(wp.title.toString(),"text/html; charset=UTF-8", null);
+
+                //set data
                 getSupportActionBar().setTitle(mapTitle.get("rendered").toString());
-
-                content.loadData(mapContent.get("rendered").toString(), "text/html; charset=UTF-8", null);
-
-                //progressDialog.dismiss();
+                //content.loadData(mapContent.get("rendered").toString(), "text/html; charset=UTF-8", null);
             }
         }, new Response.ErrorListener() {
             @Override
