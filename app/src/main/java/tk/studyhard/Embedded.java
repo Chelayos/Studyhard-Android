@@ -1,4 +1,4 @@
-package com.wordpressappexample;
+package tk.studyhard;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.wordpressappexample;
+package tk.studyhard;
 
 //import android.app.ProgressDialog;
 import android.app.ActionBar;
