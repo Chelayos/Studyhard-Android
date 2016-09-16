@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,25 +18,30 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Post extends AppCompatActivity {
-    WebView content;
-    //ProgressDialog progressDialog;
+    WebView view;
     Gson gson;
-    Map<String, Object> mapPost;
-    Map<String, Object> mapTitle;
-    Map<String, Object> mapContent;
-    Map<String, Object> map_embedded;
-    ArrayList map_replies;
-
     WPPost wp;
+    String content;
+    SimpleDateFormat f1, f2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,42 +49,50 @@ public class Post extends AppCompatActivity {
         setContentView(R.layout.post);
 
         final String id = getIntent().getExtras().getString("id");
-        content = (WebView)findViewById(R.id.content);
+        view = (WebView)findViewById(R.id.content);
 
         String url = "https://studyhard.tk/wp-json/wp/v2/posts/"+id+"?_embed=1";
 
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                gson = new Gson();
-                mapPost = (Map<String, Object>) gson.fromJson(s, Map.class);
-                mapTitle = (Map<String, Object>) mapPost.get("title");
-                mapContent = (Map<String, Object>) mapPost.get("content");
 
-                map_embedded = (Map<String, Object>) mapPost.get("_embedded");
+                // Create WPPost Class from JSON
+                gson = new Gson();
+                wp = gson.fromJson(s, WPPost.class);
+                wp = (WPPost) gson.fromJson(s, WPPost.class);
+
+                // Get WPPost content
+                content = wp.content.get("rendered").toString();
 
                 // Do we have replies?
-                if(map_embedded.containsKey("replies"))
-                {
-                    map_replies = (ArrayList) map_embedded.get("replies");
-                    content.loadData(map_replies.toString(), "text/html; charset=UTF-8", null);
+                if(wp._embedded.replies != null) {
+                    for (Replies r : wp._embedded.replies[0]) {
+                        try
+                        {
+                            f1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                            f2 = new SimpleDateFormat("dd.MM.yy");
+                            content += "<hr>" + f2.format(f1.parse(r.date));
+                        }
+                        catch (ParseException e)
+                        {
+                            //invalid date
+                        }
+                        content += " " + r.author_name + ":" + r.content.get("rendered");
+                    }
+                    content = content.replaceAll("<p>", "");
                 }
 
-                //wp = (WPPost) gson.fromJson(s, WPPost.class);
-                //content.loadData(wp.title.toString(),"text/html; charset=UTF-8", null);
-
-                //set data
-                getSupportActionBar().setTitle(mapTitle.get("rendered").toString());
-                //content.loadData(mapContent.get("rendered").toString(), "text/html; charset=UTF-8", null);
+                // set view data
+                getSupportActionBar().setTitle(wp.title.get("rendered").toString());
+                view.loadData(content,"text/html; charset=UTF-8", null);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                //progressDialog.dismiss();
                 Toast.makeText(Post.this, id, Toast.LENGTH_LONG).show();
             }
         });
-
         RequestQueue rQueue = Volley.newRequestQueue(Post.this);
         rQueue.add(request);
     }

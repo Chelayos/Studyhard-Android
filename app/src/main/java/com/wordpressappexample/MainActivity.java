@@ -38,17 +38,13 @@ public class MainActivity extends AppCompatActivity {
     String url = "https://studyhard.tk/wp-json/wp/v2/posts?filter[posts_per_page]=99";
     List<Object> list;
     Gson gson;
-    //ProgressDialog progressDialog;
     ListView postList;
     Map<String,Object> mapPost;
     Map<String,Object> mapTitle;
-    Map<String,Object> mapDate;
     int postID;
     String postTitle[];
+    SimpleDateFormat f1, f2;
     String date;
-    Date date2;
-    Date date3;
-    String date4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +52,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         postList = (ListView)findViewById(R.id.postList);
-
-        //progressDialog = new ProgressDialog(MainActivity.this);
-        //progressDialog.setMessage("Loading...");
-        //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        //progressDialog.show();
 
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -73,30 +64,19 @@ public class MainActivity extends AppCompatActivity {
                     mapPost = (Map<String, Object>) list.get(i);
                     mapTitle = (Map<String, Object>) mapPost.get("title");
 
-                    date = mapPost.get("date").toString();
-
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-                    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-                    try{
-                        date2 = (sdf.parse(date));
-                        java.sql.Date date3 = new java.sql.Date(date2.getTime());
-
-                        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yy");
-                        String formattedDate = formatter.format(date3);
-
-                        date4 = formattedDate;
-
+                    try
+                    {
+                        f1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+                        f2 = new SimpleDateFormat("dd.MM.yy");
+                        date = f2.format(f1.parse(mapPost.get("date").toString()));
                     }
                     catch (java.text.ParseException e)
                     {
-
+                        // invalid date
                     }
 
-                    postTitle[i] = (String) mapTitle.get("rendered") + " " + date4;
-
+                    postTitle[i] = (String) mapTitle.get("rendered") + " " + date;
                     postList.setAdapter(new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, postTitle));
-                    //progressDialog.dismiss();
                 }
             }
         }, new Response.ErrorListener() {
