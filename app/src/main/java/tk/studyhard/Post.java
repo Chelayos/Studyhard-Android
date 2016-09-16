@@ -20,13 +20,18 @@ public class Post extends AppCompatActivity {
     WPPost wp;
     String content;
     SimpleDateFormat f1, f2;
+    String cat_name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.post);
 
+        cat_name = getIntent().getExtras().getString("cat_name");
+        getSupportActionBar().setTitle(cat_name);
+
         final String id = getIntent().getExtras().getString("id");
+
         view = (WebView)findViewById(R.id.content);
 
         String url = "https://studyhard.tk/wp-json/wp/v2/posts/"+id+"?_embed=1";
@@ -39,6 +44,9 @@ public class Post extends AppCompatActivity {
                 gson = new Gson();
                 wp = gson.fromJson(s, WPPost.class);
                 wp = (WPPost) gson.fromJson(s, WPPost.class);
+
+                // Set Post Title
+                getSupportActionBar().setTitle(cat_name + " » " + wp.title.get("rendered").toString());
 
                 // Get WPPost content
                 content = wp.content.get("rendered").toString();
@@ -62,7 +70,6 @@ public class Post extends AppCompatActivity {
                 }
 
                 // set view data
-                getSupportActionBar().setTitle(wp.title.get("rendered").toString());
                 view.loadData(content,"text/html; charset=UTF-8", null);
             }
         }, new Response.ErrorListener() {

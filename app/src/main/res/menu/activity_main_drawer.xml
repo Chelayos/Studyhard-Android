@@ -3,33 +3,45 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_calendar"
             android:icon="@drawable/ic_menu_camera"
             android:title="Import" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_img"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Gallery" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Kategorien">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+            android:id="@+id/cat0"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Alle Kategorien"/>
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/cat1"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="News"/>
+            <item
+                android:id="@+id/cat8"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Mathematik"/>
+            <item
+                android:id="@+id/cat10"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Wirtschaft"/>
+            <item
+                android:id="@+id/cat11"
+                android:icon="@drawable/ic_menu_send"
+                android:title="English"/>
+            <item
+                android:id="@+id/cat12"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Wirtschaftsinformatik"/>
+            <item
+                android:id="@+id/cat13"
+                android:icon="@drawable/ic_menu_send"
+                android:title="SoftwareEngineering"/>
         </menu>
     </item>
 
