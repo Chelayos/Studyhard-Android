@@ -17,7 +17,7 @@
             <item
             android:id="@+id/cat0"
             android:icon="@drawable/ic_menu_send"
-            android:title="Alle Kategorien"/>
+            android:title="Home"/>
             <item
                 android:id="@+id/cat1"
                 android:icon="@drawable/ic_menu_send"

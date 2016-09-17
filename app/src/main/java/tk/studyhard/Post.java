@@ -1,5 +1,6 @@
 package tk.studyhard;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -21,6 +22,7 @@ public class Post extends AppCompatActivity {
     String content;
     SimpleDateFormat f1, f2;
     String cat_name = "";
+    int cat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

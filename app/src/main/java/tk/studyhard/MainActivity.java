@@ -32,14 +32,14 @@ public class MainActivity extends AppCompatActivity
     List<Object> list;
     Gson gson;
     ListView postList;
-    Map<String,Object> mapPost;
-    Map<String,Object> mapTitle;
+    Map<String, Object> mapPost;
+    Map<String, Object> mapTitle;
     int postID;
     String postTitle[];
     SimpleDateFormat f1, f2;
     String date;
     int cat = 0;
-    String cat_name = "Studyhard";
+    String cat_name = "Home";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        getSupportActionBar().setTitle(cat_name);
         loadActivity(0);
     }
 
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.cat8:
                 loadActivity(8);
                 getSupportActionBar().setTitle("Mathematik");
-                cat_name = "Mathematik";
+                cat_name = "Math";
                 break;
             case R.id.cat10:
                 loadActivity(10);
@@ -107,23 +108,23 @@ public class MainActivity extends AppCompatActivity
             case R.id.cat11:
                 loadActivity(11);
                 getSupportActionBar().setTitle("English");
-                cat_name = "English";
+                cat_name = "Eng";
                 break;
             case R.id.cat12:
                 loadActivity(12);
                 getSupportActionBar().setTitle("Wirtschaftsinformatik");
-                cat_name = "Wirtschaftsinformatik";
+                cat_name = "WI";
                 break;
             case R.id.cat13:
                 loadActivity(13);
                 getSupportActionBar().setTitle("Software Enigneering");
-                cat_name = "Software Engineering";
+                cat_name = "SE";
                 break;
             case R.id.cat0: default:
                 cat = 0;
                 loadActivity(0);
-                getSupportActionBar().setTitle("Studyhard");
-                cat_name = "Studyhard";
+                getSupportActionBar().setTitle("Home");
+                cat_name = "Home";
                 break;
         }
 
@@ -188,6 +189,7 @@ public class MainActivity extends AppCompatActivity
                 Intent intent = new Intent(getApplicationContext(),Post.class);
                 intent.putExtra("id", ""+postID);
                 intent.putExtra("cat_name", cat_name);
+                intent.putExtra("cat", cat);
                 startActivity(intent);
             }
         });
