@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.cat13:
                 loadActivity(13);
-                getSupportActionBar().setTitle("Software Enigneering");
+                getSupportActionBar().setTitle("Software Engineering");
                 cat_name = "SE";
                 break;
             case R.id.cat0: default:
