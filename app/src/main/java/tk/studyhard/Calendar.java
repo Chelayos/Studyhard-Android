@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 
 public class Calendar extends AppCompatActivity {
-
     private WebView webView;
 
     public void onCreate(Bundle savedInstanceState) {
