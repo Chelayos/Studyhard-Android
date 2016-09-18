@@ -22,6 +22,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
@@ -85,10 +87,12 @@ public class MainActivity extends AppCompatActivity
 
         switch(id) {
             case R.id.nav_calendar:
-                // activity
+                Intent i = new Intent(getApplicationContext(), Calendar.class);
+                startActivity(i);
                 break;
-            case R.id.nav_img:
-                // another startActivity, this is for item with id "menu_item2"
+            case R.id.nav_timetable:
+                Intent j = new Intent(getApplicationContext(), Timetable.class);
+                startActivity(j);
                 break;
             case R.id.cat1:
                 loadActivity(1);

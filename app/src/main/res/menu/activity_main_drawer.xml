@@ -5,11 +5,11 @@
         <item
             android:id="@+id/nav_calendar"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="Kalender" />
         <item
-            android:id="@+id/nav_img"
+            android:id="@+id/nav_timetable"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="Stundenplan" />
     </group>
 
     <item android:title="Kategorien">

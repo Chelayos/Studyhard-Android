@@ -19,6 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Post" />
+        <activity android:name=".Calendar" />
+        <activity android:name=".Timetable" />
     </application>
 
 </manifest>
